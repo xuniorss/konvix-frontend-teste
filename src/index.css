@@ -4,8 +4,12 @@
 
 html,
 body,
-:root {
+#root {
 	height: 100%;
+}
+
+.center {
+	@apply flex h-full w-full flex-col items-center justify-center;
 }
 
 @layer base {
