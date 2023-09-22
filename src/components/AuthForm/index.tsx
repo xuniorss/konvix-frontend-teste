@@ -1,8 +1,11 @@
 import { AuthFormProps, AuthFormSchema } from '@/models/auth-form'
+import { userApi } from '@/services/user'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff } from 'lucide-react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
 import {
 	Form,
@@ -20,6 +23,7 @@ interface IAuthForm {
 
 export const AuthForm = ({ signUpPage = false }: IAuthForm) => {
 	const [showPass, setShowPass] = useState(false)
+	const navigate = useNavigate()
 
 	const form = useForm<AuthFormProps>({
 		resolver: zodResolver(AuthFormSchema),
@@ -28,13 +32,25 @@ export const AuthForm = ({ signUpPage = false }: IAuthForm) => {
 
 	const { isSubmitting, isValid } = form.formState
 
-	const onSubmit: SubmitHandler<AuthFormProps> = async (data) => {
-		try {
-			console.log(data)
-		} catch (error) {
-			console.error(error)
-		}
-	}
+	const onSubmit: SubmitHandler<AuthFormProps> = useCallback(
+		async (data) => {
+			try {
+				if (signUpPage) {
+					await userApi.createAccount(data)
+
+					form.reset()
+					navigate('/')
+
+					toast.success('Registro finalizado com sucesso.')
+				} else {
+					console.log(data)
+				}
+			} catch (error) {
+				toast.error('Não foi possível completar esta operação.')
+			}
+		},
+		[form, navigate, signUpPage],
+	)
 
 	return (
 		<Form {...form}>
