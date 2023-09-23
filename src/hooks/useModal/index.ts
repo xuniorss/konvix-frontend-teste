@@ -1,10 +1,11 @@
 import { CustomerProps } from '@/models/customers'
 import { create } from 'zustand'
 
-export type ModalType = 'createCustomer' | 'editCustomer'
+export type ModalType = 'createCustomer' | 'editCustomer' | 'removeCustomer'
 
 interface ModalData {
 	customer?: CustomerProps
+	customerId?: string
 }
 
 interface ModalStore {

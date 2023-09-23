@@ -41,7 +41,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 const { data: ufData } = await axios.get<UfProps[]>(import.meta.env.VITE_UF_URL)
 
 export const EditCustomerModal = () => {
-	const { isOpen, onClose, type, data } = useModal()
+	const { isOpen, onClose, type, data, onOpen } = useModal()
 	const [openUf, setOpenUf] = useState(false)
 	const [ufSelected, setUfSelected] = useState('')
 	const { page } = usePagination()
@@ -329,7 +329,21 @@ export const EditCustomerModal = () => {
 							)}
 						/>
 
-						<div className="flex items-center justify-end">
+						<div className="flex items-center justify-end gap-x-4">
+							<div className="border-2 border-dashed border-red-500 p-1">
+								<Button
+									onClick={() =>
+										onOpen('removeCustomer', {
+											customerId: customer?.cod_cliente,
+										})
+									}
+									type="button"
+									variant="destructive"
+								>
+									Remover
+								</Button>
+							</div>
+
 							<Button type="submit" disabled={isSubmitting}>
 								Atualizar
 							</Button>

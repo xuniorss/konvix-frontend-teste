@@ -21,9 +21,18 @@ const updateCustomer = async ({
 }: {
 	id: string
 	values: CustomerFormProps
-}) => {
-	const { data } = await api.put(`/customer/${id}`, values)
+}): Promise<CustomerFormProps> => {
+	const { data } = await api.put<CustomerFormProps>(`/customer/${id}`, values)
 	return data
 }
 
-export const customersApi = { fetchCustomers, registerCustomer, updateCustomer }
+const removeCustomer = async (id: string): Promise<void> => {
+	await api.delete<void>(`/customer/${id}`)
+}
+
+export const customersApi = {
+	fetchCustomers,
+	registerCustomer,
+	updateCustomer,
+	removeCustomer,
+}
