@@ -1,4 +1,4 @@
-import { CustomerPagination } from '@/models/customers'
+import { CustomerFormProps, CustomerPagination } from '@/models/customers'
 import { api } from '../api/api'
 
 const fetchCustomers = async ({
@@ -10,4 +10,8 @@ const fetchCustomers = async ({
 	return data
 }
 
-export const customersApi = { fetchCustomers }
+const registerCustomer = async (data: CustomerFormProps): Promise<void> => {
+	await api.post<void>('/create-customer', data)
+}
+
+export const customersApi = { fetchCustomers, registerCustomer }

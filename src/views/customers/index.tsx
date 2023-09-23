@@ -3,17 +3,16 @@ import { Content } from '@/components/Content'
 import { DynamicTable } from '@/components/DynamicTable'
 import { Button } from '@/components/ui/button'
 import { customersApi } from '@/services/customers'
-import { usePagination } from '@/store/pagination'
+
+import { useModal } from '@/hooks/useModal'
+import { usePagination } from '@/hooks/usePagination'
 import { useQuery } from '@tanstack/react-query'
 import { Loader2, UserPlus } from 'lucide-react'
 import { CustomerList } from './components/customer-list'
 
-// const { data } = await axios.get(
-// 	'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
-// )
-
 export const CustomersPage = () => {
 	const { page } = usePagination()
+	const { onOpen } = useModal()
 
 	const {
 		data: customerResult,
@@ -50,12 +49,15 @@ export const CustomersPage = () => {
 	return (
 		<Content>
 			<div className="my-4 flex w-full items-start justify-end">
-				<Button variant="secondary">
+				<Button
+					onClick={() => onOpen('createCustomer')}
+					variant="secondary"
+				>
 					<UserPlus className="mr-2 h-5 w-5" />
 					Novo cliente
 				</Button>
 			</div>
-			<section className="flex h-[40rem] w-full flex-col items-center justify-center rounded-md border px-4">
+			<section className="flex h-auto w-full flex-col items-center justify-center rounded-md border px-4 md:h-[40rem]">
 				<div className="w-full flex-1 p-4">
 					<DynamicTable
 						labelHead={[

@@ -14,7 +14,7 @@ export const Navbar = () => {
 	}
 
 	return (
-		<header className="fixed top-0 z-30 flex h-14 w-full items-center border-b bg-secondary/50">
+		<header className="fixed top-0 z-30 flex h-14 w-full items-center border-b bg-secondary md:bg-secondary/50">
 			<section className="flex w-full items-center justify-between px-4">
 				<Link to="/home">
 					<h1 className="text-xl font-bold antialiased md:text-2xl">

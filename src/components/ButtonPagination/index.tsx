@@ -1,6 +1,6 @@
+import { usePagination } from '@/hooks/usePagination'
 import { cn } from '@/lib/utils'
 import { PaginationMeta } from '@/models/pagination'
-import { usePagination } from '@/store/pagination'
 import { Button } from '../ui/button'
 
 export const ButtonPagination = ({ meta }: { meta: PaginationMeta }) => {
