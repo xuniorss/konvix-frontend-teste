@@ -1,11 +1,13 @@
 import { AuthFormProps, AuthFormSchema } from '@/models/auth-form'
 import { userApi } from '@/services/user'
+import { useAuthStore } from '@/store/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+
 import { Button } from '../ui/button'
 import {
 	Form,
@@ -24,6 +26,7 @@ interface IAuthForm {
 export const AuthForm = ({ signUpPage = false }: IAuthForm) => {
 	const [showPass, setShowPass] = useState(false)
 	const navigate = useNavigate()
+	const { signIn } = useAuthStore()
 
 	const form = useForm<AuthFormProps>({
 		resolver: zodResolver(AuthFormSchema),
@@ -43,13 +46,14 @@ export const AuthForm = ({ signUpPage = false }: IAuthForm) => {
 
 					toast.success('Registro finalizado com sucesso.')
 				} else {
-					console.log(data)
+					await signIn(data)
+					navigate('/home')
 				}
 			} catch (error) {
 				toast.error('Não foi possível completar esta operação.')
 			}
 		},
-		[form, navigate, signUpPage],
+		[form, navigate, signIn, signUpPage],
 	)
 
 	return (

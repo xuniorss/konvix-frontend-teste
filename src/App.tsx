@@ -1,5 +1,6 @@
 import { Toaster } from 'react-hot-toast'
 import { Route, Routes } from 'react-router-dom'
+
 import { PrivateRoute } from './components/PrivateRoute'
 import { PublicRoute } from './components/PublicRoute'
 import { HomePage } from './views/home'
