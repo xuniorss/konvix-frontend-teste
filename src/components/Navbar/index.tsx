@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/store/auth'
 import { LogOut } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Button } from '../ui/button'
 
@@ -16,11 +16,11 @@ export const Navbar = () => {
 	return (
 		<header className="fixed top-0 z-30 flex h-14 w-full items-center border-b bg-secondary/50">
 			<section className="flex w-full items-center justify-between px-4">
-				<span>
+				<Link to="/home">
 					<h1 className="text-xl font-bold antialiased md:text-2xl">
 						Konvix - teste
 					</h1>
-				</span>
+				</Link>
 				<Button
 					aria-label="button logout"
 					type="button"
