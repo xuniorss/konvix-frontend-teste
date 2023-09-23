@@ -12,7 +12,9 @@ export const DynamicTable = ({ labelHead, children }: DynamicTableProps) => {
 			<TableHeader>
 				<TableRow>
 					{Array.from({ length: labelHead.length }).map((_, idx) => (
-						<TableHead key={idx}>{labelHead[idx]}</TableHead>
+						<TableHead className="truncate" key={idx}>
+							{labelHead[idx]}
+						</TableHead>
 					))}
 				</TableRow>
 			</TableHeader>
