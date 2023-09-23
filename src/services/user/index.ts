@@ -18,4 +18,8 @@ const createSession = async (
 	return data
 }
 
-export const userApi = { createAccount, createSession }
+const destroySession = async (): Promise<void> => {
+	await api.delete<void>('/destroy-session')
+}
+
+export const userApi = { createAccount, createSession, destroySession }

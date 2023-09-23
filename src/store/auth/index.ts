@@ -13,7 +13,7 @@ type StateProps = {
 }
 type ActionsProps = {
 	signIn: (credentials: AuthFormProps) => Promise<void>
-	signOut: () => void
+	signOut: () => Promise<void>
 }
 
 export const useAuthStore = create<StateProps & ActionsProps>()(
@@ -45,7 +45,16 @@ export const useAuthStore = create<StateProps & ActionsProps>()(
 						toast.error('Não foi possível acessar o sistema.')
 					}
 				},
-				signOut: () => {},
+				signOut: async () => {
+					try {
+						await userApi.destroySession()
+						Cookies.remove(import.meta.env.VITE_COOKIES)
+
+						set({ user: null, isAuthenticated: false })
+					} catch (error) {
+						toast.error('Problema ao sair do sistema.')
+					}
+				},
 			}),
 			{ name: 'konvix-userauth-store' },
 		),
