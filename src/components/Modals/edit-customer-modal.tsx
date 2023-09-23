@@ -12,11 +12,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 import { Button } from '../ui/button'
+import { Checkbox } from '../ui/checkbox'
 import {
 	Command,
 	CommandEmpty,
@@ -39,33 +40,43 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 const { data: ufData } = await axios.get<UfProps[]>(import.meta.env.VITE_UF_URL)
 
-export const CreateCustomerModal = () => {
-	const { isOpen, onClose, type } = useModal()
+export const EditCustomerModal = () => {
+	const { isOpen, onClose, type, data } = useModal()
 	const [openUf, setOpenUf] = useState(false)
 	const [ufSelected, setUfSelected] = useState('')
 	const { page } = usePagination()
 
-	const isModalOpen = isOpen && type === 'createCustomer'
+	const isModalOpen = isOpen && type === 'editCustomer'
+	const { customer } = data
 
 	const form = useForm<CustomerFormProps>({
 		resolver: zodResolver(CustomerFormSchema),
 		defaultValues: {
-			des_nome: '',
-			des_endereco: '',
-			num_endereco: '',
-			des_cidade: '',
-			des_uf: '',
-			des_telefone: '',
-			des_contato: '',
+			des_nome: customer?.des_nome,
+			flg_inativo: customer?.flg_inativo === 0 ? false : true,
+			des_endereco: customer?.des_endereco,
+			num_endereco: customer?.num_endereco,
+			des_cidade: customer?.des_cidade,
+			des_uf: customer?.des_uf,
+			des_telefone: customer?.des_telefone,
+			des_contato: customer?.des_contato,
 		},
 	})
 
-	const { isSubmitting, isValid } = form.formState
+	useEffect(() => {
+		if (customer) {
+			form.setValue('des_nome', customer.des_nome)
+			form.setValue('flg_inativo', customer.flg_inativo === 0 ? false : true)
+			form.setValue('des_endereco', customer.des_endereco)
+			form.setValue('num_endereco', customer.num_endereco)
+			form.setValue('des_cidade', customer.des_cidade)
+			form.setValue('des_uf', customer.des_uf)
+			form.setValue('des_telefone', customer.des_telefone)
+			form.setValue('des_contato', customer.des_contato)
+		}
+	}, [customer, form])
 
-	const handleClose = () => {
-		form.reset()
-		onClose()
-	}
+	const { isSubmitting } = form.formState
 
 	const handleSelectUf = (uf: string) => {
 		setUfSelected(uf)
@@ -79,34 +90,48 @@ export const CreateCustomerModal = () => {
 		},
 	})
 
-	const findUfSelected = ufData.find((uf) => uf.sigla === ufSelected)
+	const findUfSelected = ufData.find(
+		(uf) => uf.sigla === (ufSelected || customer?.des_uf),
+	)
 
 	const onSubmit: SubmitHandler<CustomerFormProps> = useCallback(
 		async (values) => {
 			try {
-				if (!values || ufSelected.length <= 0) return
+				const data = {
+					...values,
+					des_uf: ufSelected || String(customer?.des_uf),
+				}
 
-				const data = { ...values, des_uf: ufSelected }
-				await customersApi.registerCustomer(data)
+				await customersApi.updateCustomer({
+					id: String(customer?.cod_cliente),
+					values: data,
+				})
 
 				form.reset()
 				setUfSelected('')
 				onClose()
 				mutate()
 
-				toast.success(`Cliente ${values.des_nome} registrado com sucesso.`)
+				toast.success(`Cliente ${values.des_nome} alterado com sucesso.`)
 			} catch (error) {
-				toast.error('Problema ao registrar cliente.')
+				toast.error('Problema ao alterar cliente.')
 			}
 		},
-		[form, mutate, onClose, ufSelected],
+		[
+			customer?.cod_cliente,
+			customer?.des_uf,
+			form,
+			mutate,
+			onClose,
+			ufSelected,
+		],
 	)
 
 	return (
-		<Dialog open={isModalOpen} onOpenChange={handleClose}>
+		<Dialog open={isModalOpen} onOpenChange={onClose}>
 			<DialogContent className="overflow-hidden bg-white text-black">
 				<DialogHeader>
-					<DialogTitle>Cadastre um novo cliente</DialogTitle>
+					<DialogTitle>Editar ou remover cliente</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
 					<form
@@ -284,14 +309,29 @@ export const CreateCustomerModal = () => {
 							/>
 						</section>
 
+						<FormField
+							control={form.control}
+							name="flg_inativo"
+							render={({ field }) => (
+								<FormItem className="flex flex-row items-start space-x-3 space-y-0">
+									<FormControl>
+										<Checkbox
+											disabled={isSubmitting}
+											checked={field.value}
+											onCheckedChange={field.onChange}
+										/>
+									</FormControl>
+									<div className="space-y-1 leading-none">
+										<FormLabel>Inativo?</FormLabel>
+									</div>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
 						<div className="flex items-center justify-end">
-							<Button
-								type="submit"
-								disabled={
-									isSubmitting || !isValid || ufSelected.length <= 0
-								}
-							>
-								Cadastrar
+							<Button type="submit" disabled={isSubmitting}>
+								Atualizar
 							</Button>
 						</div>
 					</form>

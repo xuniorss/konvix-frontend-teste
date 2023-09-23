@@ -1,4 +1,5 @@
 import { z } from 'zod'
+
 import { PaginationMeta } from '../pagination'
 
 export type CustomerProps = {
@@ -6,7 +7,7 @@ export type CustomerProps = {
 	des_nome: string
 	flg_inativo: number
 	des_endereco: string
-	num_endereco: number | null
+	num_endereco: string | undefined
 	des_cidade: string
 	des_uf: string
 	des_telefone: string
@@ -38,6 +39,7 @@ export type UfProps = {
 
 export const CustomerFormSchema = z.object({
 	des_nome: z.string().min(1, { message: 'Nome do cliente é obrigatíorio.' }),
+	flg_inativo: z.boolean().optional(),
 	des_endereco: z.string().min(1, { message: 'Endereço é obrigatíorio.' }),
 	num_endereco: z.string().optional(),
 	des_cidade: z.string().min(1, { message: 'Cidade obrigatíoria.' }),
