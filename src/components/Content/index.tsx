@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+
 import { Navbar } from '../Navbar'
 
 interface ContentProps {
@@ -7,9 +8,9 @@ interface ContentProps {
 
 export const Content = ({ children }: ContentProps) => {
 	return (
-		<div>
+		<section className="h-full w-full">
 			<Navbar />
-			<main>{children}</main>
-		</div>
+			<main className="h-full w-full px-4 pt-14">{children}</main>
+		</section>
 	)
 }

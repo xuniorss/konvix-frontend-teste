@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/store/auth'
+import { LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '../ui/button'
@@ -13,10 +14,24 @@ export const Navbar = () => {
 	}
 
 	return (
-		<div>
-			<Button type="button" onClick={handleSignOut}>
-				Sair
-			</Button>
-		</div>
+		<header className="fixed top-0 z-30 flex h-14 w-full items-center border-b bg-secondary/50">
+			<section className="flex w-full items-center justify-between px-4">
+				<span>
+					<h1 className="text-xl font-bold antialiased md:text-2xl">
+						Konvix - teste
+					</h1>
+				</span>
+				<Button
+					aria-label="button logout"
+					type="button"
+					size="sm"
+					className="text-sm"
+					onClick={handleSignOut}
+				>
+					Sair
+					<LogOut className="ml-2 h-4 w-4" />
+				</Button>
+			</section>
+		</header>
 	)
 }
