@@ -1,5 +1,6 @@
 import { useModal } from '@/hooks/useModal'
 import { usePagination } from '@/hooks/usePagination'
+import { formatPhoneNumber } from '@/lib/phone-mask'
 import { cn } from '@/lib/utils'
 import {
 	CustomerFormProps,
@@ -44,6 +45,7 @@ export const EditCustomerModal = () => {
 	const { isOpen, onClose, type, data, onOpen } = useModal()
 	const [openUf, setOpenUf] = useState(false)
 	const [ufSelected, setUfSelected] = useState('')
+	const [phone, setPhone] = useState('')
 	const { page } = usePagination()
 
 	const isModalOpen = isOpen && type === 'editCustomer'
@@ -58,7 +60,7 @@ export const EditCustomerModal = () => {
 			num_endereco: customer?.num_endereco,
 			des_cidade: customer?.des_cidade,
 			des_uf: customer?.des_uf,
-			des_telefone: customer?.des_telefone,
+			des_telefone: phone,
 			des_contato: customer?.des_contato,
 		},
 	})
@@ -71,7 +73,7 @@ export const EditCustomerModal = () => {
 			form.setValue('num_endereco', customer.num_endereco)
 			form.setValue('des_cidade', customer.des_cidade)
 			form.setValue('des_uf', customer.des_uf)
-			form.setValue('des_telefone', customer.des_telefone)
+			setPhone(customer.des_telefone)
 			form.setValue('des_contato', customer.des_contato)
 		}
 	}, [customer, form])
@@ -99,6 +101,7 @@ export const EditCustomerModal = () => {
 			try {
 				const data = {
 					...values,
+					des_telefone: phone,
 					des_uf: ufSelected || String(customer?.des_uf),
 				}
 
@@ -123,6 +126,7 @@ export const EditCustomerModal = () => {
 			form,
 			mutate,
 			onClose,
+			phone,
 			ufSelected,
 		],
 	)
@@ -275,14 +279,21 @@ export const EditCustomerModal = () => {
 							<FormField
 								control={form.control}
 								name="des_telefone"
-								render={({ field }) => (
+								render={() => (
 									<FormItem>
 										<FormLabel>Telefone</FormLabel>
 										<FormControl>
 											<Input
 												disabled={isSubmitting}
 												placeholder="e.g: '(61) 3943-4432'"
-												{...field}
+												value={phone}
+												minLength={14}
+												maxLength={14}
+												onChange={(e) =>
+													setPhone(
+														formatPhoneNumber(e.target.value),
+													)
+												}
 											/>
 										</FormControl>
 										<FormMessage />

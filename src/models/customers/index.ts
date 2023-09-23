@@ -38,14 +38,14 @@ export type UfProps = {
 }
 
 export const CustomerFormSchema = z.object({
-	des_nome: z.string().min(1, { message: 'Nome do cliente é obrigatíorio.' }),
+	des_nome: z.string().min(1, { message: 'Nome do cliente é obrigatório.' }),
 	flg_inativo: z.boolean().optional(),
-	des_endereco: z.string().min(1, { message: 'Endereço é obrigatíorio.' }),
+	des_endereco: z.string().min(1, { message: 'Endereço é obrigatório.' }),
 	num_endereco: z.string().optional(),
-	des_cidade: z.string().min(1, { message: 'Cidade obrigatíoria.' }),
-	des_uf: z.string().max(2, { message: 'UF obrigatíoria.' }),
-	des_telefone: z.string().min(1, { message: 'Telefone obrigatíorio.' }),
-	des_contato: z.string().min(1, { message: 'Contato obrigatíorio.' }),
+	des_cidade: z.string().min(1, { message: 'Cidade obrigatória.' }),
+	des_uf: z.string().max(2, { message: 'UF obrigatória.' }),
+	des_telefone: z.string().max(14, { message: 'Telefone obrigatório.' }),
+	des_contato: z.string().min(1, { message: 'Contato obrigatório.' }),
 })
 
 export type CustomerFormProps = z.infer<typeof CustomerFormSchema>

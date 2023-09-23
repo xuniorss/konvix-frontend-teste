@@ -1,5 +1,6 @@
 import { useModal } from '@/hooks/useModal'
 import { usePagination } from '@/hooks/usePagination'
+import { formatPhoneNumber } from '@/lib/phone-mask'
 import { cn } from '@/lib/utils'
 import {
 	CustomerFormProps,
@@ -43,6 +44,7 @@ export const CreateCustomerModal = () => {
 	const { isOpen, onClose, type } = useModal()
 	const [openUf, setOpenUf] = useState(false)
 	const [ufSelected, setUfSelected] = useState('')
+	const [phone, setPhone] = useState('')
 	const { page } = usePagination()
 
 	const isModalOpen = isOpen && type === 'createCustomer'
@@ -64,6 +66,7 @@ export const CreateCustomerModal = () => {
 
 	const handleClose = () => {
 		form.reset()
+		setPhone('')
 		onClose()
 	}
 
@@ -86,7 +89,7 @@ export const CreateCustomerModal = () => {
 			try {
 				if (!values || ufSelected.length <= 0) return
 
-				const data = { ...values, des_uf: ufSelected }
+				const data = { ...values, des_telefone: phone, des_uf: ufSelected }
 				await customersApi.registerCustomer(data)
 
 				form.reset()
@@ -99,7 +102,7 @@ export const CreateCustomerModal = () => {
 				toast.error('Problema ao registrar cliente.')
 			}
 		},
-		[form, mutate, onClose, ufSelected],
+		[form, mutate, onClose, phone, ufSelected],
 	)
 
 	return (
@@ -250,14 +253,21 @@ export const CreateCustomerModal = () => {
 							<FormField
 								control={form.control}
 								name="des_telefone"
-								render={({ field }) => (
+								render={() => (
 									<FormItem>
 										<FormLabel>Telefone</FormLabel>
 										<FormControl>
 											<Input
 												disabled={isSubmitting}
 												placeholder="e.g: '(61) 3943-4432'"
-												{...field}
+												value={phone}
+												minLength={14}
+												maxLength={14}
+												onChange={(e) =>
+													setPhone(
+														formatPhoneNumber(e.target.value),
+													)
+												}
 											/>
 										</FormControl>
 										<FormMessage />
