@@ -6,7 +6,9 @@ import { Button } from '../ui/button'
 export const ButtonPagination = ({ meta }: { meta: PaginationMeta }) => {
 	const { page, setPage } = usePagination()
 
-	const pagesArray = Array.from({ length: meta.total }, (_, idx) => idx + 1)
+	const totalPages = Math.ceil(meta.total / meta.per_page)
+
+	const pagesArray = Array.from({ length: totalPages }, (_, idx) => idx + 1)
 
 	return pagesArray.map((pg) => (
 		<Button
