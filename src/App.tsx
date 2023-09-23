@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import { PrivateRoute } from './components/PrivateRoute'
 import { PublicRoute } from './components/PublicRoute'
+import { CustomersPage } from './views/customers'
 import { HomePage } from './views/home'
 import { SignInPage } from './views/sign-in'
 import { SignUpPage } from './views/sign-up'
@@ -19,6 +20,7 @@ export default function App() {
 
 				<Route path="/" element={<PrivateRoute />}>
 					<Route path="home" element={<HomePage />} />
+					<Route path="customers" element={<CustomersPage />} />
 				</Route>
 			</Routes>
 		</>
