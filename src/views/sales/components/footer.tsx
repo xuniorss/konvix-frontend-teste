@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { useModal } from '@/hooks/useModal'
 import { useSale } from '@/hooks/useSale'
 import { formatCurrency } from '@/lib/format-currency'
 import { salesApi } from '@/services/sales'
@@ -9,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 export const FooterSales = () => {
 	const { sale, setNewSale } = useSale()
 	const navigate = useNavigate()
+	const { onOpen } = useModal()
 
 	const { data } = useQuery({
 		queryKey: [import.meta.env.VITE_SALES],
@@ -20,19 +22,6 @@ export const FooterSales = () => {
 	})
 
 	const disableButton = Number(data?.length) <= 0
-
-	const handleCancelSale = async () => {
-		try {
-			await salesApi.destroyCoupon(String(sale?.cod_venda))
-
-			setNewSale()
-			navigate('/home')
-
-			toast.success('Venda cancelada com sucesso.')
-		} catch (error) {
-			toast.error('Problema ao cancelar venda.')
-		}
-	}
 
 	const handleEndSale = async () => {
 		try {
@@ -50,7 +39,7 @@ export const FooterSales = () => {
 	return (
 		<footer className="w-full border-t">
 			<section className="flex flex-col-reverse gap-y-2 p-3 md:flex-row md:items-center md:justify-between md:gap-y-0">
-				<Button onClick={handleCancelSale} variant="destructive">
+				<Button onClick={() => onOpen('cancelSale')} variant="destructive">
 					Cancelar venda
 				</Button>
 				<span className="text-center">

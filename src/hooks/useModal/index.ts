@@ -8,6 +8,7 @@ export type ModalType =
 	| 'removeCustomer'
 	| 'addItemSale'
 	| 'removeItemSale'
+	| 'cancelSale'
 
 interface ModalData {
 	customer?: CustomerProps
