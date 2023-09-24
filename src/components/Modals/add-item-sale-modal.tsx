@@ -10,7 +10,7 @@ import { salesApi } from '@/services/sales'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { CurrencyInput, Locales } from 'input-currency-react'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
@@ -47,10 +47,6 @@ export const AddItemSaleModal = () => {
 		},
 	})
 
-	useEffect(() => {
-		form.setValue('cod_venda', Number(sale?.cod_venda))
-	}, [form, sale?.cod_venda])
-
 	const { mutate } = useMutation({
 		mutationFn: () =>
 			salesApi.fetchItems(
@@ -63,12 +59,15 @@ export const AddItemSaleModal = () => {
 			}),
 	})
 
-	const { isSubmitting } = form.formState
+	const { isSubmitting, isValid } = form.formState
 
 	const onSubmit: SubmitHandler<AddItemSaleFormProps> = useCallback(
 		async (values) => {
 			try {
-				const response = await salesApi.addItem(values)
+				const response = await salesApi.addItem(
+					Number(sale?.cod_venda),
+					values,
+				)
 
 				const saleData: SaleProps = {
 					...(sale as SaleProps),
@@ -172,7 +171,10 @@ export const AddItemSaleModal = () => {
 						</section>
 
 						<div className="flex items-center justify-end">
-							<Button variant="outline" disabled={isSubmitting}>
+							<Button
+								variant="outline"
+								disabled={isSubmitting || !isValid}
+							>
 								Lançar item
 							</Button>
 						</div>

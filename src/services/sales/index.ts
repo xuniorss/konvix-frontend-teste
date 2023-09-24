@@ -1,6 +1,7 @@
 import {
 	AddItemSaleFormProps,
 	ResponseAddItemProps,
+	ResponseItemsProps,
 	SaleFormProps,
 	SaleProps,
 } from '@/models/sales'
@@ -19,17 +20,21 @@ const destroyCoupon = async (saleId: string): Promise<void> => {
 const fetchItems = async (
 	customerId: string,
 	saleId: string,
-): Promise<{ items: number }> => {
-	const { data } = await api.get<{ items: number }>(
+): Promise<ResponseItemsProps> => {
+	const { data } = await api.get<ResponseItemsProps>(
 		`/sale-item/${customerId}/${saleId}`,
 	)
 	return data
 }
 
 const addItem = async (
+	saleId: number,
 	item: AddItemSaleFormProps,
 ): Promise<ResponseAddItemProps> => {
-	const { data } = await api.post<ResponseAddItemProps>('/add-item', item)
+	const { data } = await api.post<ResponseAddItemProps>(
+		`/add-item/${saleId}`,
+		item,
+	)
 	return data
 }
 

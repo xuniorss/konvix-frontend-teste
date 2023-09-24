@@ -1,14 +1,18 @@
 import { Content } from '@/components/Content'
 import { CreateCouponModal } from '@/components/Modals/create-coupon-modal'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { useSale } from '@/hooks/useSale'
 import { CustomerProps } from '@/models/customers'
 import { customersApi } from '@/services/customers'
+import { salesApi } from '@/services/sales'
+import { useQuery } from '@tanstack/react-query'
 import memoize from 'memoize-one'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { FooterSales } from './components/footer'
 import { HeaderSales } from './components/header'
+import { ListItem } from './components/list-item'
 
 export const SalesPage = () => {
 	const [isMounted, setIsMounted] = useState(false)
@@ -18,6 +22,15 @@ export const SalesPage = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => setIsMounted(true), [])
+
+	const { data } = useQuery({
+		queryKey: [import.meta.env.VITE_SALES],
+		queryFn: () =>
+			salesApi.fetchItems(
+				String(sale?.cod_cliente),
+				String(sale?.cod_venda),
+			),
+	})
 
 	const fetchCustomersMemoized = memoize(async () => {
 		try {
@@ -29,10 +42,8 @@ export const SalesPage = () => {
 	})
 
 	useEffect(() => {
-		if (!isMounted) return
-
 		fetchCustomersMemoized()
-	}, [fetchCustomersMemoized, isMounted])
+	}, [isMounted])
 
 	if (!isMounted) return null
 
@@ -58,9 +69,17 @@ export const SalesPage = () => {
 					codVenda={Number(sale?.cod_venda)}
 					desNome={String(customer?.des_nome)}
 				/>
-				<section className="flex-1">
-					<h3>Itens da venda</h3>
-					<div className="h-5/6 overflow-y-auto">item</div>
+				<section className="md:flex-1">
+					<h3 className="text-lg font-semibold">Itens da venda</h3>
+					<ScrollArea className="h-[34.375rem]">
+						<div className="space-y-3">
+							{data &&
+								data.length > 0 &&
+								data.items.map((item) => (
+									<ListItem key={item.cod_item} {...item} />
+								))}
+						</div>
+					</ScrollArea>
 				</section>
 				<FooterSales />
 			</section>

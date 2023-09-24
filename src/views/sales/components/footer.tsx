@@ -19,9 +19,7 @@ export const FooterSales = () => {
 			),
 	})
 
-	const disableButton = Number(data?.items) <= 0
-
-	console.log(data?.items)
+	const disableButton = Number(data?.length) <= 0
 
 	const handleCancelSale = async () => {
 		try {

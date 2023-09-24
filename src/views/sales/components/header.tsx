@@ -16,10 +16,14 @@ export const HeaderSales = ({ codVenda, desNome }: IHeaderSales) => {
 				<h2 className="text-xl font-bold">Lançando nova venda</h2>
 				<span>
 					<h3>
-						<strong>Código da venda:</strong> {codVenda}
+						<strong className="text-emerald-600">Código da venda:</strong>{' '}
+						{codVenda}
 					</h3>
 					<p className="truncate">
-						<strong>Nome do(a) cliente:</strong> {desNome}
+						<strong className="text-emerald-600">
+							Nome do(a) cliente:
+						</strong>{' '}
+						{desNome}
 					</p>
 				</span>
 			</div>

@@ -15,7 +15,6 @@ export const SaleFormSchema = z.object({
 export type SaleFormProps = z.infer<typeof SaleFormSchema>
 
 export const AddItemSaleFormSchema = z.object({
-	cod_venda: z.number(),
 	des_produto: z
 		.string()
 		.min(1, { message: 'Descrição do produto é obrigatória.' }),
@@ -48,7 +47,6 @@ export const AddItemSaleFormSchema = z.object({
 export type AddItemSaleFormProps = z.infer<typeof AddItemSaleFormSchema>
 
 type AddItemProps = {
-	codVenda: number
 	desProduto: string
 	valUnitario: number
 	qtdItens: number
@@ -58,4 +56,19 @@ type AddItemProps = {
 export type ResponseAddItemProps = {
 	data: AddItemProps
 	valTotalVenda: number
+}
+
+export type ItemsProps = {
+	cod_item: number
+	cod_venda: number
+	des_produto: string
+	val_unitario: number
+	qtd_itens: number
+	val_total: number
+	dta_cadastro: Date
+}
+
+export type ResponseItemsProps = {
+	items: ItemsProps[]
+	length: number
 }
