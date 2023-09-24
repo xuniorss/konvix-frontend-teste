@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { PaginationMeta } from '../pagination'
 
 export type CustomerProps = {
-	cod_cliente: string
+	cod_cliente: number
 	des_nome: string
 	flg_inativo: number
 	des_endereco: string

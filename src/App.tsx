@@ -5,6 +5,7 @@ import { PrivateRoute } from './components/PrivateRoute'
 import { PublicRoute } from './components/PublicRoute'
 import { CustomersPage } from './views/customers'
 import { HomePage } from './views/home'
+import { SalesPage } from './views/sales'
 import { SignInPage } from './views/sign-in'
 import { SignUpPage } from './views/sign-up'
 
@@ -21,6 +22,7 @@ export default function App() {
 				<Route path="/" element={<PrivateRoute />}>
 					<Route path="home" element={<HomePage />} />
 					<Route path="customers" element={<CustomersPage />} />
+					<Route path="sales" element={<SalesPage />} />
 				</Route>
 			</Routes>
 		</>

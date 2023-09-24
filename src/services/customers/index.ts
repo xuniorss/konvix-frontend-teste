@@ -1,4 +1,8 @@
-import { CustomerFormProps, CustomerPagination } from '@/models/customers'
+import {
+	CustomerFormProps,
+	CustomerPagination,
+	CustomerProps,
+} from '@/models/customers'
 
 import { api } from '../api/api'
 
@@ -8,6 +12,11 @@ const fetchCustomers = async ({
 	page: number
 }): Promise<CustomerPagination> => {
 	const { data } = await api.get<CustomerPagination>(`/customers?page=${page}`)
+	return data
+}
+
+const fetchAllCustomers = async (): Promise<CustomerProps[]> => {
+	const { data } = await api.get<CustomerProps[]>('/customers/all')
 	return data
 }
 
@@ -32,6 +41,7 @@ const removeCustomer = async (id: string): Promise<void> => {
 
 export const customersApi = {
 	fetchCustomers,
+	fetchAllCustomers,
 	registerCustomer,
 	updateCustomer,
 	removeCustomer,
