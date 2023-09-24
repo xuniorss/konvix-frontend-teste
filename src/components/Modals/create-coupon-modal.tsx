@@ -1,9 +1,10 @@
 import { useSale } from '@/hooks/useSale'
 import { cn } from '@/lib/utils'
-import { CustomerProps } from '@/models/customers'
 import { SaleFormProps, SaleFormSchema } from '@/models/sales'
+import { customersApi } from '@/services/customers'
 import { salesApi } from '@/services/sales'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useCallback } from 'react'
@@ -38,16 +39,22 @@ import {
 	SelectValue,
 } from '../ui/select'
 
-export const CreateCouponModal = ({
-	customers,
-}: {
-	customers: CustomerProps[]
-}) => {
+export const CreateCouponModal = () => {
 	const { isNewSale, setCurrentSale, setSale } = useSale()
 
 	const form = useForm<SaleFormProps>({
 		resolver: zodResolver(SaleFormSchema),
 		defaultValues: { dta_venda: new Date() },
+	})
+
+	const { data: customers } = useQuery({
+		queryKey: ['all.customers'],
+		queryFn: () =>
+			customersApi
+				.fetchAllCustomers()
+				.then((response) =>
+					response.filter((customer) => customer.flg_inativo === 0),
+				),
 	})
 
 	const { isSubmitting, isValid } = form.formState
@@ -141,7 +148,7 @@ export const CreateCouponModal = ({
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
-											{customers.map((customer) => (
+											{customers?.map((customer) => (
 												<SelectItem
 													key={customer.cod_cliente}
 													value={`${customer.cod_cliente}`}

@@ -7,4 +7,8 @@ const createCoupon = async (values: SaleFormProps): Promise<SaleProps> => {
 	return data
 }
 
-export const salesApi = { createCoupon }
+const destroyCoupon = async (saleId: string): Promise<void> => {
+	await api.delete<void>(`/destroy-coupon/${saleId}`)
+}
+
+export const salesApi = { createCoupon, destroyCoupon }

@@ -5,6 +5,9 @@ import { customersApi } from '@/services/customers'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { FooterSales } from './components/footer'
+import { HeaderSales } from './components/header'
+
 const customers = await customersApi.fetchAllCustomers()
 
 export const SalesPage = () => {
@@ -19,7 +22,7 @@ export const SalesPage = () => {
 	if (isNewSale) {
 		return (
 			<Content className="center">
-				<CreateCouponModal customers={customers} />
+				<CreateCouponModal />
 			</Content>
 		)
 	}
@@ -33,7 +36,17 @@ export const SalesPage = () => {
 
 	return (
 		<Content>
-			<section></section>
+			<section className="flex h-full flex-col p-4">
+				<HeaderSales
+					codVenda={Number(sale?.cod_venda)}
+					desNome={customer.des_nome}
+				/>
+				<section className="flex-1">
+					<h3>Itens da venda</h3>
+					<div className="h-5/6 overflow-y-auto">item</div>
+				</section>
+				<FooterSales />
+			</section>
 		</Content>
 	)
 }
