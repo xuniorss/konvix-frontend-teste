@@ -13,3 +13,49 @@ export const SaleFormSchema = z.object({
 })
 
 export type SaleFormProps = z.infer<typeof SaleFormSchema>
+
+export const AddItemSaleFormSchema = z.object({
+	cod_venda: z.number(),
+	des_produto: z
+		.string()
+		.min(1, { message: 'Descrição do produto é obrigatória.' }),
+	val_unitario: z.string().refine(
+		(value) => {
+			const formattedValue = value.replace(',', '.').replace(/,/g, '')
+
+			const numericValue = parseFloat(
+				formattedValue
+					.replace('.', '')
+					.replace(/\s/g, '')
+					.replace(/[^0-9.,]+/g, ''),
+			)
+
+			return !isNaN(numericValue) && numericValue > 0
+		},
+		{
+			message: 'O valor unitário deve ser um número maior que 0.',
+		},
+	),
+	qtd_itens: z.string().refine(
+		(value) => {
+			const intValue = parseInt(value, 10)
+			return intValue > 0
+		},
+		{ message: 'A quantidade deve ser maior que 0.' },
+	),
+})
+
+export type AddItemSaleFormProps = z.infer<typeof AddItemSaleFormSchema>
+
+type AddItemProps = {
+	codVenda: number
+	desProduto: string
+	valUnitario: number
+	qtdItens: number
+	valTotal: number
+}
+
+export type ResponseAddItemProps = {
+	data: AddItemProps
+	valTotalVenda: number
+}

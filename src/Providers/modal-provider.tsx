@@ -1,3 +1,4 @@
+import { AddItemSaleModal } from '@/components/Modals/add-item-sale-modal'
 import { CreateCustomerModal } from '@/components/Modals/create-customer-modal'
 import { EditCustomerModal } from '@/components/Modals/edit-customer-modal'
 import { RemoveCustomerModal } from '@/components/Modals/remove-customer-modal'
@@ -15,6 +16,7 @@ export const ModalProvider = () => {
 			<CreateCustomerModal />
 			<EditCustomerModal />
 			<RemoveCustomerModal />
+			<AddItemSaleModal />
 		</>
 	)
 }

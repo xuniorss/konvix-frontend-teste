@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { useModal } from '@/hooks/useModal'
 import { Plus } from 'lucide-react'
 
 interface IHeaderSales {
@@ -7,6 +8,8 @@ interface IHeaderSales {
 }
 
 export const HeaderSales = ({ codVenda, desNome }: IHeaderSales) => {
+	const { onOpen } = useModal()
+
 	return (
 		<div className="flex w-full items-center justify-between border-b pb-4">
 			<div className="flex flex-col space-y-3">
@@ -25,6 +28,7 @@ export const HeaderSales = ({ codVenda, desNome }: IHeaderSales) => {
 				className="truncate"
 				size="sm"
 				variant="secondary"
+				onClick={() => onOpen('addItemSale')}
 			>
 				<Plus className="mr-0 h-4 w-4 md:mr-2" />
 				<p className="hidden md:block">Add produto</p>

@@ -48,7 +48,7 @@ export const CreateCouponModal = () => {
 	})
 
 	const { data: customers } = useQuery({
-		queryKey: ['all.customers'],
+		queryKey: [import.meta.env.VITE_ALL_CUSTOMERS],
 		queryFn: () =>
 			customersApi
 				.fetchAllCustomers()
