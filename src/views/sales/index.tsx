@@ -23,7 +23,7 @@ export const SalesPage = () => {
 
 	useEffect(() => setIsMounted(true), [])
 
-	const { data } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: [import.meta.env.VITE_SALES],
 		queryFn: () =>
 			salesApi.fetchItems(
@@ -73,8 +73,14 @@ export const SalesPage = () => {
 					<h3 className="text-lg font-semibold">Itens da venda</h3>
 					<ScrollArea className="h-[34.375rem]">
 						<div className="space-y-3">
+							{data && isLoading && (
+								<div className="center">
+									<p>Buscando itens da venda...</p>
+								</div>
+							)}
 							{data &&
 								data.length > 0 &&
+								!isLoading &&
 								data.items.map((item) => (
 									<ListItem key={item.cod_item} {...item} />
 								))}

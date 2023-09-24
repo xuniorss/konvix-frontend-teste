@@ -42,10 +42,15 @@ const endSale = async (customerId: string): Promise<void> => {
 	await api.post<void>(`/end-sale/${customerId}`)
 }
 
+const removeItem = async (saleId: number, itemId: number): Promise<void> => {
+	await api.delete<void>(`/destroy-item/${saleId}/${itemId}`)
+}
+
 export const salesApi = {
 	createCoupon,
 	destroyCoupon,
 	fetchItems,
 	addItem,
 	endSale,
+	removeItem,
 }

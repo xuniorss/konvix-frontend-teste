@@ -1,4 +1,5 @@
 import { CustomerProps } from '@/models/customers'
+import { ItemsProps } from '@/models/sales'
 import { create } from 'zustand'
 
 export type ModalType =
@@ -6,10 +7,12 @@ export type ModalType =
 	| 'editCustomer'
 	| 'removeCustomer'
 	| 'addItemSale'
+	| 'removeItemSale'
 
 interface ModalData {
 	customer?: CustomerProps
 	customerId?: string
+	item?: ItemsProps
 }
 
 interface ModalStore {
