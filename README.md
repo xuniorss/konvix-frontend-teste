@@ -1,6 +1,6 @@
 # Teste Konvix Frontend (React.js)
 
-Projeto desenvolvido usando Vite.js, com o intuito de atender as funcionalidades de teste teste (login, cadastro de clientes, vendas e relatórios.).
+Projeto desenvolvido usando [Vite.js](https://vitejs.dev/), com o intuito de atender as funcionalidades de teste (login, cadastro de clientes, vendas e relatórios.).
 
 ### 📋 Pré-requisitos
 
