@@ -59,7 +59,7 @@ pnpm dev
 
 ### 🏃‍♂️ Iniciando o projeto (em produção)
 
-1. Seguindo a documentação do [Vite.js](https://vitejs.dev/guide/static-deploy.html#building-the-app) sobre a construindo o aplicativo, pode ser testado localmente.
+1. Seguindo a documentação do [Vite.js](https://vitejs.dev/guide/static-deploy.html#building-the-app) sobre `construindo o aplicativo`, pode ser testado localmente.
 
 2. Na raiz do diretório `konvix-frontend-teste` execute os comandos no `terminal:`
 
