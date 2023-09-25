@@ -29,7 +29,7 @@ export const CancelSaleModal = () => {
 			await salesApi.destroyCoupon(String(sale?.cod_venda))
 
 			setNewSale()
-			window.location.assign('/home')
+			window.location.assign('/')
 			toast.success('Venda cancelada com sucesso.')
 		} catch (error) {
 			toast.error('Problema ao cancelar venda.')
