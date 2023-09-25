@@ -8,7 +8,7 @@ import { Loader2 } from 'lucide-react'
 import { CustomerClient } from './components/client'
 import { CustomerColumn } from './components/collumns'
 
-export const CustomerSalesReport = () => {
+export const CustomerSalesReportPage = () => {
 	const { data, isLoading } = useQuery({
 		queryKey: [import.meta.env.VITE_REPORT_SALES_CUSTOMERS],
 		queryFn: () => salesApi.listByCustomers(),

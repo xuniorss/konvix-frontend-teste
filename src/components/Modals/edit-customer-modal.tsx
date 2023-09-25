@@ -105,7 +105,6 @@ export const EditCustomerModal = () => {
 					values: data,
 				})
 
-				form.reset()
 				setUfSelected('')
 				onClose()
 				mutate()
@@ -118,7 +117,6 @@ export const EditCustomerModal = () => {
 		[
 			customer?.cod_cliente,
 			customer?.des_uf,
-			form,
 			mutate,
 			onClose,
 			phone,

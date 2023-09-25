@@ -1,6 +1,7 @@
 import {
 	AddItemSaleFormProps,
 	ResponseAddItemProps,
+	ResponseFilterProps,
 	ResponseItemsProps,
 	SaleFormProps,
 	SaleProps,
@@ -52,6 +53,16 @@ const listByCustomers = async (): Promise<CustomerColumn[]> => {
 	return data
 }
 
+const listSales = async (
+	dta_inicio: string,
+	dta_fim: string,
+): Promise<ResponseFilterProps[]> => {
+	const { data } = await api.get<ResponseFilterProps[]>(
+		`/report-sale?dta_inicio=${dta_inicio}&dta_fim=${dta_fim}`,
+	)
+	return data
+}
+
 export const salesApi = {
 	createCoupon,
 	destroyCoupon,
@@ -60,4 +71,5 @@ export const salesApi = {
 	endSale,
 	removeItem,
 	listByCustomers,
+	listSales,
 }

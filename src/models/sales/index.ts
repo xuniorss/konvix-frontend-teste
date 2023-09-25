@@ -72,3 +72,14 @@ export type ResponseItemsProps = {
 	items: ItemsProps[]
 	length: number
 }
+
+export type ResponseFilterProps = {
+	cod_venda: number
+	cod_cliente: number
+	dta_venda: Date
+	val_total_venda: number
+	des_nome: string
+	des_cidade: string
+	des_uf: string
+	des_telefone: string
+}
