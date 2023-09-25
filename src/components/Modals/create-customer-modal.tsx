@@ -94,6 +94,7 @@ export const CreateCustomerModal = () => {
 
 				form.reset()
 				setUfSelected('')
+				setPhone('')
 				onClose()
 				mutate()
 

@@ -5,6 +5,7 @@ import {
 	SaleFormProps,
 	SaleProps,
 } from '@/models/sales'
+import { CustomerColumn } from '@/views/customer-sales-report/components/collumns'
 
 import { api } from '../api/api'
 
@@ -46,6 +47,11 @@ const removeItem = async (saleId: number, itemId: number): Promise<void> => {
 	await api.delete<void>(`/destroy-item/${saleId}/${itemId}`)
 }
 
+const listByCustomers = async (): Promise<CustomerColumn[]> => {
+	const { data } = await api.get<CustomerColumn[]>(`/report-sale/customers`)
+	return data
+}
+
 export const salesApi = {
 	createCoupon,
 	destroyCoupon,
@@ -53,4 +59,5 @@ export const salesApi = {
 	addItem,
 	endSale,
 	removeItem,
+	listByCustomers,
 }

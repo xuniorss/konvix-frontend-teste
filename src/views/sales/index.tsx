@@ -30,6 +30,7 @@ export const SalesPage = () => {
 				String(sale?.cod_cliente),
 				String(sale?.cod_venda),
 			),
+		enabled: false,
 	})
 
 	const fetchCustomersMemoized = memoize(async () => {
@@ -45,7 +46,7 @@ export const SalesPage = () => {
 		fetchCustomersMemoized()
 	}, [isMounted])
 
-	if (!isMounted) return null
+	if (!isMounted) return <></>
 
 	if (isNewSale) {
 		return (
@@ -57,7 +58,8 @@ export const SalesPage = () => {
 
 	if (!sale) {
 		setNewSale()
-		return navigate('/')
+		navigate('/')
+		return <></>
 	}
 
 	const customer = customers.find((c) => c.cod_cliente === sale.cod_cliente)

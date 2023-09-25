@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import { PrivateRoute } from './components/PrivateRoute'
 import { PublicRoute } from './components/PublicRoute'
+import { CustomerSalesReport } from './views/customer-sales-report'
 import { CustomersPage } from './views/customers'
 import { HomePage } from './views/home'
 import { SalesPage } from './views/sales'
@@ -23,6 +24,10 @@ export default function App() {
 					<Route path="home" element={<HomePage />} />
 					<Route path="customers" element={<CustomersPage />} />
 					<Route path="sales" element={<SalesPage />} />
+					<Route
+						path="customer-sales-report"
+						element={<CustomerSalesReport />}
+					/>
 				</Route>
 			</Routes>
 		</>
