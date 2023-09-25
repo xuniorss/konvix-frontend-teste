@@ -173,7 +173,7 @@ export const CreateCouponModal = () => {
 								aria-disabled={isSubmitting}
 								className={buttonVariants({ variant: 'secondary' })}
 							>
-								Votar
+								Voltar
 							</Link>
 							<Button disabled={!isValid || isSubmitting} type="submit">
 								Prosseguir

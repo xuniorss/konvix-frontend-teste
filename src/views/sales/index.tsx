@@ -44,6 +44,7 @@ export const SalesPage = () => {
 
 	useEffect(() => {
 		fetchCustomersMemoized()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMounted])
 
 	if (!isMounted) return <></>

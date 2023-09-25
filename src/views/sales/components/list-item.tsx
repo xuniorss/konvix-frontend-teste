@@ -9,10 +9,7 @@ export const ListItem = memo((item: ItemsProps) => {
 	const { onOpen } = useModal()
 
 	return (
-		<article
-			className="group rounded border px-4 py-2"
-			onClick={() => onOpen('removeItemSale', { item })}
-		>
+		<article className="group rounded border px-4 py-2">
 			<div className="flex items-center justify-between">
 				<section className="flex flex-col space-y-2">
 					<div className="flex items-center gap-x-2">
@@ -31,6 +28,7 @@ export const ListItem = memo((item: ItemsProps) => {
 					size="icon"
 					variant="destructive"
 					className="invisible group-hover:visible"
+					onClick={() => onOpen('removeItemSale', { item })}
 				>
 					<Trash className="h-5 w-5" />
 				</Button>

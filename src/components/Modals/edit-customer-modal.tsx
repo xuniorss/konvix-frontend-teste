@@ -2,21 +2,17 @@ import { useModal } from '@/hooks/useModal'
 import { usePagination } from '@/hooks/usePagination'
 import { formatPhoneNumber } from '@/lib/phone-mask'
 import { cn } from '@/lib/utils'
-import {
-	CustomerFormProps,
-	CustomerFormSchema,
-	UfProps,
-} from '@/models/customers'
+import { CustomerFormProps, CustomerFormSchema } from '@/models/customers'
 import { customersApi } from '@/services/customers'
 import { queryClient } from '@/services/query-client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
+import { useUf } from '@/hooks/useUf'
 import { Button } from '../ui/button'
 import { Checkbox } from '../ui/checkbox'
 import {
@@ -39,13 +35,12 @@ import {
 import { Input } from '../ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
-const { data: ufData } = await axios.get<UfProps[]>(import.meta.env.VITE_UF_URL)
-
 export const EditCustomerModal = () => {
 	const { isOpen, onClose, type, data, onOpen } = useModal()
 	const [openUf, setOpenUf] = useState(false)
 	const [ufSelected, setUfSelected] = useState('')
 	const [phone, setPhone] = useState('')
+	const { ufData } = useUf()
 	const { page } = usePagination()
 
 	const isModalOpen = isOpen && type === 'editCustomer'
@@ -345,7 +340,7 @@ export const EditCustomerModal = () => {
 								<Button
 									onClick={() =>
 										onOpen('removeCustomer', {
-											customerId: customer?.cod_cliente,
+											customerId: String(customer?.cod_cliente),
 										})
 									}
 									type="button"
