@@ -9,11 +9,13 @@ export type ModalType =
 	| 'addItemSale'
 	| 'removeItemSale'
 	| 'cancelSale'
+	| 'reportItemSale'
 
 interface ModalData {
 	customer?: CustomerProps
 	customerId?: string
 	item?: ItemsProps
+	saleId?: number
 }
 
 interface ModalStore {

@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { PaginationMeta } from '../pagination'
+
 export type SaleProps = {
 	cod_cliente: number
 	dta_venda: Date
@@ -83,3 +85,10 @@ export type ResponseFilterProps = {
 	des_uf: string
 	des_telefone: string
 }
+
+export type ReportPagination = {
+	meta: PaginationMeta | undefined
+	data: ResponseFilterProps[]
+}
+
+export type ReportListItemProps = Omit<ItemsProps, 'cod_venda' | 'dta_cadastro'>

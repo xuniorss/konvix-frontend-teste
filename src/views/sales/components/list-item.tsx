@@ -16,10 +16,18 @@ export const ListItem = memo((item: ItemsProps) => {
 						<span># {item.cod_item}</span>
 						<p className="font-semibold">{item.des_produto}</p>
 					</div>
-					<div className="flex items-center gap-x-2 font-semibold">
-						<p>Qtd: {item.qtd_itens}</p>
-						<p>Vlr: {formatCurrency.format(item.val_unitario)}</p>
-						<p>Tot: {formatCurrency.format(item.val_total)}</p>
+					<div className="flex items-center gap-x-2">
+						<p>
+							<strong>Qtd:</strong> {item.qtd_itens}
+						</p>
+						<p>
+							<strong>Vlr. unit:</strong>{' '}
+							{formatCurrency.format(item.val_unitario)}
+						</p>
+						<p>
+							<strong>Vlr. Tot:</strong>{' '}
+							{formatCurrency.format(item.val_total)}
+						</p>
 					</div>
 				</section>
 

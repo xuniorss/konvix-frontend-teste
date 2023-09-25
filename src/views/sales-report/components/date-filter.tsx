@@ -1,18 +1,17 @@
-import { format } from 'date-fns'
-import { Calendar as CalendarIcon } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover'
-import { cn } from '@/lib/utils'
+import { format } from 'date-fns'
+import { Calendar as CalendarIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-export function FilterDate() {
+import { DateFilterButton } from './date-filter-button'
+
+export function DateFilter() {
 	const [startDate, setStartDate] = useState<Date>()
 	const [endDate, setEndDate] = useState<Date>()
 	const [, setSearchParams] = useSearchParams()
@@ -30,23 +29,14 @@ export function FilterDate() {
 	}, [endDate, startDate, setSearchParams])
 
 	return (
-		<section className="flex items-center gap-x-2">
+		<section className="flex flex-col gap-x-2 space-y-2 md:flex-row md:items-center md:space-y-0">
 			<Popover>
-				<PopoverTrigger asChild>
-					<Button
-						variant="outline"
-						className={cn(
-							'w-[17.5rem] justify-start text-left font-normal',
-							!startDate && 'text-muted-foreground',
-						)}
-					>
-						<CalendarIcon className="mr-2 h-4 w-4" />
-						{startDate ? (
-							format(startDate, 'dd/MM/yyyy')
-						) : (
-							<span>Selecione a data inicial</span>
-						)}
-					</Button>
+				<PopoverTrigger>
+					<DateFilterButton
+						icon={CalendarIcon}
+						text="Selecione a data inicial"
+						date={startDate}
+					/>
 				</PopoverTrigger>
 				<PopoverContent className="w-auto p-0">
 					<Calendar
@@ -58,21 +48,12 @@ export function FilterDate() {
 				</PopoverContent>
 			</Popover>
 			<Popover>
-				<PopoverTrigger asChild>
-					<Button
-						variant="outline"
-						className={cn(
-							'w-[17.5rem] justify-start text-left font-normal',
-							!endDate && 'text-muted-foreground',
-						)}
-					>
-						<CalendarIcon className="mr-2 h-4 w-4" />
-						{endDate ? (
-							format(endDate, 'dd/MM/yyyy')
-						) : (
-							<span>Selecione a data final</span>
-						)}
-					</Button>
+				<PopoverTrigger>
+					<DateFilterButton
+						icon={CalendarIcon}
+						text="Selecione a data final"
+						date={endDate}
+					/>
 				</PopoverTrigger>
 				<PopoverContent className="w-auto p-0">
 					<Calendar
